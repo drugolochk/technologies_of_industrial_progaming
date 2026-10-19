@@ -1,0 +1,10 @@
+{
+  "starterMessage": "chore: prepare practice 09 structure",
+  "solutionMessage": "feat: add practice 09 Express read API",
+  "stubs": {
+    "practice-09/src/validation.js": "export function parsePositiveId() { throw new Error(\"Не реализовано: parsePositiveId\"); }\nexport function parseFilters() { throw new Error(\"Не реализовано: parseFilters\"); }\n",
+    "practice-09/src/task-service.js": "export function selectTasks() { throw new Error(\"Не реализовано: selectTasks\"); }\nexport function findTask() { throw new Error(\"Не реализовано: findTask\"); }\n",
+    "practice-09/src/routes.js": "export function createRoutes() { throw new Error(\"Не реализовано: createRoutes\"); }\n",
+    "practice-09/README.md": "# Практическая работа № 9 — отчёт\n\nШаблон.\n"
+  }
+}

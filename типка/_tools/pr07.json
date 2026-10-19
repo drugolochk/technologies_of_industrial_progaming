@@ -1,0 +1,9 @@
+{
+  "starterMessage": "chore: prepare practice 07 structure",
+  "solutionMessage": "feat: add practice 07 React task UI",
+  "stubs": {
+    "practice-07/src/domain/task-service.js": "export function validateTaskDraft() { throw new Error(\"Не реализовано: validateTaskDraft\"); }\nexport function selectTasks() { throw new Error(\"Не реализовано: selectTasks\"); }\nexport function getTaskStats() { throw new Error(\"Не реализовано: getTaskStats\"); }\nexport function addTask() { throw new Error(\"Не реализовано: addTask\"); }\nexport function updateTask() { throw new Error(\"Не реализовано: updateTask\"); }\nexport function toggleTask() { throw new Error(\"Не реализовано: toggleTask\"); }\nexport function removeTask() { throw new Error(\"Не реализовано: removeTask\"); }\nexport function nextTaskId() { throw new Error(\"Не реализовано: nextTaskId\"); }\n",
+    "practice-07/src/App.jsx": "export default function App() {\n  return <p>TODO: реализовать приложение</p>;\n}\n",
+    "practice-07/README.md": "# Практическая работа № 7 — отчёт\n\nШаблон.\n"
+  }
+}

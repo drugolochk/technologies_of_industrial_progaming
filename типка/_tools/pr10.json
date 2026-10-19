@@ -1,0 +1,9 @@
+{
+  "starterMessage": "chore: prepare practice 10 structure",
+  "solutionMessage": "feat: add practice 10 write API and client integration",
+  "stubs": {
+    "practice-10/src/task-validation.js": "export function validateTaskInput() { throw new Error(\"Не реализовано: validateTaskInput\"); }\n",
+    "practice-10/src/write-routes.js": "export function registerWriteRoutes() { throw new Error(\"Не реализовано: registerWriteRoutes\"); }\n",
+    "practice-10/README.md": "# Практическая работа № 10 — отчёт\n\nШаблон.\n"
+  }
+}

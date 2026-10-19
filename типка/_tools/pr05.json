@@ -1,0 +1,11 @@
+{
+  "starterMessage": "chore: prepare practice 05 structure",
+  "solutionMessage": "feat: add practice 05 async HTTP client",
+  "remove": ["practice-05/src/partial-load.js", "practice-05/checks/extension.checks.js", "practice-05/examples/delay-compare.js"],
+  "stubs": {
+    "practice-05/src/api-client.js": "export const API_ERROR_KINDS = [\"http\", \"network\", \"invalid-response\", \"timeout\", \"aborted\"];\n\nexport class ApiError extends Error {\n  constructor(kind, message, details = {}) {\n    super(message);\n    this.name = \"ApiError\";\n    this.kind = kind;\n    this.url = details.url;\n    this.status = details.status;\n    this.code = details.code;\n    this.details = details.details;\n    this.cause = details.cause;\n  }\n}\n\nexport function buildUrl(baseUrl, path, query = {}) {\n  throw new Error(\"Не реализовано: buildUrl\");\n}\n\nexport function createApiClient(options = {}) {\n  throw new Error(\"Не реализовано: createApiClient\");\n}\n",
+    "practice-05/src/task-api.js": "export function createTaskApi(client) {\n  throw new Error(\"Не реализовано: createTaskApi\");\n}\n",
+    "practice-05/src/main.js": "import { createApiClient } from \"./api-client.js\";\nimport { createTaskApi } from \"./task-api.js\";\nimport { variantFilters, variantNumber } from \"./variant.js\";\n\nconst baseUrl = process.env.API_URL ?? \"http://127.0.0.1:5505/api\";\n\nasync function run() {\n  // TODO: создать клиент, выполнить контрольный сценарий и обработать ошибку задачи 999.\n  throw new Error(\"Не реализовано: контрольный сценарий\");\n}\n\nrun().catch((error) => {\n  console.error(error.message);\n  process.exitCode = 1;\n});\n",
+    "practice-05/README.md": "# Практическая работа № 5 — отчёт\n\n**Тема:** асинхронные операции и получение данных с сервера.\n\n## 1. Автор, вариант и окружение\n\n| Поле | Значение |\n|---|---|\n| Имя | ... |\n| Группа | ... |\n| Вариант | ... |\n| Node.js | ... |\n\n## 2. Запуск\n\n...\n\n## 3. Эксперимент с очередями\n\n...\n\n## 4. Наблюдение за HTTP\n\n...\n\n## 5. Реализация клиента\n\n...\n\n## 6. Виды ошибок\n\n...\n\n## 7. Общий и индивидуальный сценарии\n\n...\n\n## 8. Фактический вывод проверок\n\n...\n\n## 9. Собственные проверки\n\n...\n\n## 10. Вывод\n\n...\n"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "starterMessage": "chore: prepare practice 06 structure",
+  "solutionMessage": "feat: add practice 06 API-backed DOM client",
+  "stubs": {
+    "practice-06/src/api-client.js": "export const API_ERROR_KINDS = [\"http\", \"network\", \"invalid-response\", \"timeout\", \"aborted\"];\n\nexport class ApiError extends Error {\n  constructor(kind, message, details = {}) {\n    super(message);\n    this.name = \"ApiError\";\n    this.kind = kind;\n    Object.assign(this, details);\n  }\n}\n\nexport function buildUrl(baseUrl, path, query = {}) {\n  throw new Error(\"Не реализовано: buildUrl\");\n}\n\nexport function createApiClient(options = {}) {\n  throw new Error(\"Не реализовано: createApiClient\");\n}\n",
+    "practice-06/src/task-api.js": "export function createTaskApi(client) {\n  throw new Error(\"Не реализовано: createTaskApi\");\n}\n",
+    "practice-06/src/form-validation.js": "export function validateTaskDraft(draft, categories) {\n  throw new Error(\"Не реализовано: validateTaskDraft\");\n}\n",
+    "practice-06/src/task-view.js": "export function createTaskElement(task, categories = []) {\n  throw new Error(\"Не реализовано: createTaskElement\");\n}\n\nexport function renderTaskList(listElement, tasks, categories = []) {\n  throw new Error(\"Не реализовано: renderTaskList\");\n}\n",
+    "practice-06/src/app-controller.js": "export function messageForError(error) {\n  throw new Error(\"Не реализовано: messageForError\");\n}\n\nexport function createAppController({ api, view }) {\n  throw new Error(\"Не реализовано: createAppController\");\n}\n",
+    "practice-06/README.md": "# Практическая работа № 6 — отчёт\n\nЗаполняется после реализации.\n"
+  }
+}

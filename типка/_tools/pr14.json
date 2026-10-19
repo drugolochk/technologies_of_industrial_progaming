@@ -1,0 +1,9 @@
+{
+  "starterMessage": "chore: prepare practice 14 structure",
+  "solutionMessage": "feat: add practice 14 release runtime Docker and CI",
+  "stubs": {
+    "practice-14/src/health.js": "export function createHealthRouter() { throw new Error(\"Не реализовано: createHealthRouter\"); }\n",
+    "practice-14/src/lifecycle.js": "export function installLifecycle() { throw new Error(\"Не реализовано: installLifecycle\"); }\nexport function createRequestTracker() { throw new Error(\"Не реализовано: createRequestTracker\"); }\n",
+    "practice-14/README.md": "# Практическая работа № 14 — отчёт\n\nШаблон.\n"
+  }
+}

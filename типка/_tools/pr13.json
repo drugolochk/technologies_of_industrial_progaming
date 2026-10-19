@@ -1,0 +1,8 @@
+{
+  "starterMessage": "chore: prepare practice 13 structure",
+  "solutionMessage": "feat: add practice 13 tests quality gate",
+  "stubs": {
+    "practice-13/tests/unit/json-body.test.js": "import { test } from \"node:test\";\ntest.todo(\"вариант 6: jsonBody\");\n",
+    "practice-13/README.md": "# Практическая работа № 13 — отчёт\n\nШаблон.\n"
+  }
+}

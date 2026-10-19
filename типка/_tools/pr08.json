@@ -1,0 +1,8 @@
+{
+  "starterMessage": "chore: prepare practice 08 structure",
+  "solutionMessage": "feat: add practice 08 useTaskData hook",
+  "stubs": {
+    "practice-08/src/hooks/useTaskData.js": "export function useTaskData() {\n  throw new Error(\"Не реализовано: useTaskData\");\n}\n",
+    "practice-08/README.md": "# Практическая работа № 8 — отчёт\n\nШаблон.\n"
+  }
+}

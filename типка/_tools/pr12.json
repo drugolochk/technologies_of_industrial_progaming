@@ -1,0 +1,9 @@
+{
+  "starterMessage": "chore: prepare practice 12 structure",
+  "solutionMessage": "feat: add practice 12 PostgreSQL store and query builders",
+  "stubs": {
+    "practice-12/src/query-builders.js": "export function buildListTasksQuery() { throw new Error(\"Не реализовано: buildListTasksQuery\"); }\nexport function buildUpdateTaskQuery() { throw new Error(\"Не реализовано: buildUpdateTaskQuery\"); }\n",
+    "practice-12/src/store.js": "export function createStore() { throw new Error(\"Не реализовано: createStore\"); }\n",
+    "practice-12/README.md": "# Практическая работа № 12 — отчёт\n\nШаблон.\n"
+  }
+}

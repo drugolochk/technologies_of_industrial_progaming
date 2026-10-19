@@ -1,0 +1,9 @@
+{
+  "starterMessage": "chore: prepare practice 11 structure",
+  "solutionMessage": "feat: add practice 11 PostgreSQL schema and queries",
+  "stubs": {
+    "practice-11/sql/01_schema.sql": "SELECT 1; -- TODO: CREATE TABLE\n",
+    "practice-11/sql/04_variant.sql": "SELECT 1; -- TODO: вариант 6\n",
+    "practice-11/README.md": "# Практическая работа № 11 — отчёт\n\nШаблон.\n"
+  }
+}
