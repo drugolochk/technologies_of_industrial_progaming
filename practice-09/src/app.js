@@ -10,7 +10,7 @@ function applyCommonHeaders(req, res, next) {
     "Cache-Control": "no-store",
     "Content-Type": "application/json; charset=utf-8",
     "Access-Control-Allow-Origin": "*",
-    "Access-Control-Allow-Methods": "GET, HEAD, OPTIONS",
+    "Access-Control-Allow-Methods": "GET, HEAD, POST, OPTIONS",
     "Access-Control-Allow-Headers": "Content-Type",
   });
   next();
@@ -71,6 +71,7 @@ export function createApp(options = {}) {
   app.use(handleOptions);
   app.use(guardUriEncoding);
 
+  app.use(express.json());
   app.use("/api", createRoutes(store));
 
   app.use((req, res, next) => {
@@ -86,6 +87,13 @@ export function createApp(options = {}) {
     next(err);
   });
 
+  app.use((err, req, res, next) => {
+    if (err.type === "entity.parse.failed") {
+      next(new ApiError(400, "INVALID_JSON", "Некорректный JSON."));
+      return;
+    }
+    next(err);
+  });
   app.use(errorHandler);
 
   return app;

@@ -55,16 +55,10 @@ test("GET /api/categories возвращает 3 категории", async () =
   );
 });
 
-test("GET /api/tasks возвращает 12 задач исходного набора", async () => {
+test("GET /api/tasks возвращает JSON-массив из 12 задач", async () => {
   const payload = (await request("/api/tasks")).json();
-  assert.deepEqual(ids(payload.data), [1, 4, 7, 10, 13, 16, 19, 22, 25, 28, 31, 34]);
-  assert.equal(payload.meta.total, 12);
-  assert.deepEqual(payload.meta.filters, {
-    completed: null,
-    priority: null,
-    categoryId: null,
-    q: "",
-  });
+  assert.ok(Array.isArray(payload));
+  assert.deepEqual(ids(payload), [1, 4, 7, 10, 13, 16, 19, 22, 25, 28, 31, 34]);
 });
 
 test("HEAD /api/health не имеет тела", async () => {
@@ -97,46 +91,40 @@ test("CORS: Access-Control-Allow-Origin *", async () => {
 
 test("GET /api/tasks?completed=false", async () => {
   const payload = (await request("/api/tasks?completed=false")).json();
-  assert.deepEqual(ids(payload.data), [4, 7, 13, 19, 22, 28, 34]);
+  assert.deepEqual(ids(payload), [4, 7, 13, 19, 22, 28, 34]);
 });
 
 test("GET /api/tasks?completed=true", async () => {
   const payload = (await request("/api/tasks?completed=true")).json();
-  assert.deepEqual(ids(payload.data), [1, 10, 16, 25, 31]);
+  assert.deepEqual(ids(payload), [1, 10, 16, 25, 31]);
 });
 
 test("GET /api/tasks?priority=high", async () => {
   const payload = (await request("/api/tasks?priority=high")).json();
-  assert.deepEqual(ids(payload.data), [4, 13, 16, 25, 34]);
+  assert.deepEqual(ids(payload), [4, 13, 16, 25, 34]);
 });
 
 test("вариант 6: GET /api/tasks?categoryId=2", async () => {
   const payload = (await request("/api/tasks?categoryId=2")).json();
-  assert.deepEqual(ids(payload.data), [4, 16, 22, 25, 28, 34]);
-  assert.equal(payload.meta.total, 6);
+  assert.deepEqual(ids(payload), [4, 16, 22, 25, 28, 34]);
+  assert.equal(payload.length, 6);
 });
 
 test("GET /api/tasks?q=ПРОВЕР", async () => {
   const payload = (await request(`/api/tasks?${new URLSearchParams({ q: "ПРОВЕР" })}`)).json();
-  assert.deepEqual(ids(payload.data), [7, 16]);
+  assert.deepEqual(ids(payload), [7, 16]);
 });
 
 test("комбинация completed=false&priority=high&categoryId=2", async () => {
   const response = await request("/api/tasks?completed=false&priority=high&categoryId=2");
   const payload = response.json();
-  assert.deepEqual(ids(payload.data), [4, 34]);
-  assert.deepEqual(payload.meta.filters, {
-    completed: false,
-    priority: "high",
-    categoryId: 2,
-    q: "",
-  });
+  assert.deepEqual(ids(payload), [4, 34]);
 });
 
 test("categoryId=999 возвращает 200 и пустой массив", async () => {
   const response = await request("/api/tasks?categoryId=999");
   assert.equal(response.status, 200);
-  assert.deepEqual(response.json().data, []);
+  assert.deepEqual(response.json(), []);
 });
 
 test("completed=0 → 400 INVALID_QUERY", async () => {
@@ -183,7 +171,7 @@ test("q длиной 101 → 400 INVALID_QUERY", async () => {
 
 test("q= не ограничивает выборку", async () => {
   const payload = (await request("/api/tasks?q=")).json();
-  assert.equal(payload.data.length, 12);
+  assert.equal(payload.length, 12);
 });
 
 test("GET /api/tasks/4 возвращает задачу", async () => {
@@ -224,11 +212,13 @@ test("GET /api/unknown → 404 ROUTE_NOT_FOUND", async () => {
   assert.equal(response.json().error.code, "ROUTE_NOT_FOUND");
 });
 
-test("POST /api/tasks → 405 и Allow", async () => {
-  const response = await request("/api/tasks", { method: "POST" });
-  assert.equal(response.status, 405);
-  assert.equal(response.json().error.code, "METHOD_NOT_ALLOWED");
-  assert.equal(response.headers.get("allow"), "GET, HEAD, OPTIONS");
+test("POST /api/tasks без title → 400 VALIDATION_ERROR", async () => {
+  const response = await request("/api/tasks", {
+    method: "POST", headers: { "Content-Type": "application/json" }, body: "{}"
+  });
+  assert.equal(response.status, 400);
+  assert.equal(response.json().error.code, "VALIDATION_ERROR");
+  assert.ok(response.json().error.details.title);
 });
 
 test("DELETE /api/tasks/999 → 405 без проверки существования", async () => {
@@ -286,7 +276,7 @@ test("OPTIONS /api/health", async () => {
 
 test("поиск без учёта регистра: провер", async () => {
   const payload = (await request(`/api/tasks?${new URLSearchParams({ q: "провер" })}`)).json();
-  assert.deepEqual(ids(payload.data), [7, 16]);
+  assert.deepEqual(ids(payload), [7, 16]);
 });
 
 test("поля задачи соответствуют контракту", async () => {
@@ -303,7 +293,7 @@ test("GET /api/tasks/1e2 → 400 INVALID_ID", async () => {
 test("чтение не изменяет исходный набор", async () => {
   await request("/api/tasks?completed=true");
   const payload = (await request("/api/tasks")).json();
-  assert.equal(payload.data.length, 12);
+  assert.equal(payload.length, 12);
   assert.equal(tasks.length, 12);
   assert.equal(categories.length, 3);
 });
@@ -351,7 +341,7 @@ test("исключение хранилища → 500 INTERNAL_ERROR без сл
 
 test("priority=medium возвращает ожидаемые id", async () => {
   const payload = (await request("/api/tasks?priority=medium")).json();
-  assert.deepEqual(ids(payload.data), [1, 10, 19, 28]);
+  assert.deepEqual(ids(payload), [1, 10, 19, 28]);
 });
 
 test("повторяющийся priority → 400", async () => {
@@ -362,7 +352,7 @@ test("повторяющийся priority → 400", async () => {
 
 test("GET /api/tasks?categoryId=1", async () => {
   const payload = (await request("/api/tasks?categoryId=1")).json();
-  assert.deepEqual(ids(payload.data), [1, 7, 13]);
+  assert.deepEqual(ids(payload), [1, 7, 13]);
 });
 
 test("PUT /api/tasks/4 → 405", async () => {

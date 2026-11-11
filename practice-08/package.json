@@ -11,7 +11,8 @@
     "check:api": "node checks/api-server.checks.js",
     "check:integration": "node checks/integration.checks.js",
     "check:react": "node --test checks/react.test.js",
-    "test": "npm run check:api && npm run check:integration && npm run check:react"
+    "test": "npm run check:api && npm run check:integration && npm run check:react && npm run check:compatibility",
+    "check:compatibility": "node --test checks/compatibility.test.js"
   },
   "dependencies": {
     "react": "^19.1.0",

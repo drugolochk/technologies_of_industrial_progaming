@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { validateTaskDraft } from "./draft-validation.js";
 
 import { ApiError } from "./errors.js";
 import { parseFilters, parsePositiveId } from "./validation.js";
@@ -11,7 +12,7 @@ function rejectMethod(req, res, next) {
     return;
   }
 
-  res.set("Allow", ALLOW);
+  res.set("Allow", req.path === "/tasks" ? "GET, HEAD, POST, OPTIONS" : ALLOW);
   next(new ApiError(405, "METHOD_NOT_ALLOWED", "Метод не поддерживается."));
 }
 
@@ -32,10 +33,7 @@ export function createRoutes(store) {
     const filters = parseFilters(url.searchParams);
     const data = store.listTasks(filters);
 
-    res.status(200).json({
-      data,
-      meta: { total: data.length, filters },
-    });
+    res.status(200).json(data);
   });
 
   router.get("/tasks/:id", (req, res, next) => {
@@ -54,6 +52,17 @@ export function createRoutes(store) {
     }
 
     res.status(200).json({ data: task });
+  });
+
+  router.post("/tasks", (req, res, next) => {
+    const result = validateTaskDraft(req.body, store.listCategories());
+    if (!result.valid) {
+      next(new ApiError(400, "VALIDATION_ERROR",
+        "Данные задачи некорректны.", result.errors));
+      return;
+    }
+    const task = store.addTask(result.value);
+    res.status(201).location(`/api/tasks/${task.id}`).json({ data: task });
   });
 
   router.all("/health", rejectMethod);

@@ -15,16 +15,24 @@ export default function TaskFilters({ filters, categories, onChange, emptyFilter
           <input id="filter-q" value={filters.q} onChange={(event) => update("q", event.target.value)} />
         </div>
         <div className="form-row">
-          <label htmlFor="filter-completed">Статус</label>
-          <select
-            id="filter-completed"
-            value={filters.completed}
-            onChange={(event) => update("completed", event.target.value)}
-          >
-            <option value="">Все</option>
-            <option value="false">В работе</option>
-            <option value="true">Выполненные</option>
-          </select>
+          <span id="status-label">Статус</span>
+          <div className="task-filters" role="group" aria-labelledby="status-label">
+            {[
+              ["", "Все"],
+              ["false", "В работе"],
+              ["true", "Завершенные"],
+            ].map(([value, label]) => (
+              <button
+                key={value}
+                type="button"
+                className={filters.completed === value ? "is-active" : ""}
+                aria-pressed={filters.completed === value}
+                onClick={() => update("completed", value)}
+              >
+                {label}
+              </button>
+            ))}
+          </div>
         </div>
         <div className="form-row">
           <label htmlFor="filter-priority">Приоритет</label>

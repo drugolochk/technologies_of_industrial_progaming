@@ -6,7 +6,7 @@ export default function TaskList({ tasks, categories, onToggle, onEdit, onDelete
       <h2 id="list-heading">Найденные задачи</h2>
       <p className="filters-hint">Найдено: {tasks.length}</p>
       {tasks.length === 0 ? (
-        <p className="empty-message">Нет задач по выбранному фильтру.</p>
+        <p className="empty-message">Список задач пуст</p>
       ) : (
         <ul className="task-list">
           {tasks.map((task) => (

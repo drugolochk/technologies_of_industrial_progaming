@@ -193,12 +193,17 @@ export function createTaskApi(client) {
   async function getTasks(filters = {}, options = {}) {
     const query = normalizeFilters(filters);
     const payload = await client.requestJson("/tasks", { query, signal: options.signal });
-    const data = assertCollection(payload, "GET /tasks");
+    // КР3/ПР9 возвращает массив; учебное API и ПР10–ПР14 — { data, meta }.
+    // Оба формата приводятся к единому интерфейсу клиента { tasks, meta }.
+    const isArrayResponse = Array.isArray(payload);
+    const data = isArrayResponse ? payload : assertCollection(payload, "GET /tasks");
 
     data.forEach((task) => assertTask(task, "GET /tasks"));
     assertUniqueIds(data, "GET /tasks");
 
-    const meta = assertMeta(payload, data, "GET /tasks");
+    const meta = isArrayResponse
+      ? { total: data.length }
+      : assertMeta(payload, data, "GET /tasks");
 
     return { tasks: data, meta };
   }

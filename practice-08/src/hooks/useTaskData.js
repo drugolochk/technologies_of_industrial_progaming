@@ -141,7 +141,14 @@ export function useTaskData({ api, filters }) {
     [api, mutate]
   );
 
+  const tasks = snapshot.tasks;
+  const isLoading = status === "loading";
+  // Временная диагностика для КР3.
+  console.log(isLoading, tasks.length);
+
   return {
+    tasks,
+    isLoading,
     snapshot,
     status,
     error,
